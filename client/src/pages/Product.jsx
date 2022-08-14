@@ -4,19 +4,19 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
-import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../requestMethods";
+import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({ padding: "10px", flexDirection: "column" })}
+
 `;
 
 const ImgContainer = styled.div`
@@ -26,14 +26,11 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 90vh;
-  object-fit: cover;
-  ${mobile({ height: "40vh" })}
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
   padding: 0px 50px;
-  ${mobile({ padding: "10px" })}
 `;
 
 const Title = styled.h1`
@@ -54,7 +51,6 @@ const FilterContainer = styled.div`
   margin: 30px 0px;
   display: flex;
   justify-content: space-between;
-  ${mobile({ width: "100%" })}
 `;
 
 const Filter = styled.div`
@@ -88,7 +84,6 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ width: "100%" })}
 `;
 
 const AmountContainer = styled.div`
@@ -115,8 +110,8 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
 
-  &:hover {
-    background-color: #f8f4f4;
+  &:hover{
+      background-color: #f8f4f4;
   }
 `;
 
@@ -132,12 +127,13 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await axiosInstance.get("/products/find/" + id);
+        const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
       } catch { }
     };
     getProduct();
   }, [id]);
+
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -147,11 +143,13 @@ const Product = () => {
     }
   };
 
+  //update the cart by react-redux
   const handleClick = () => {
     dispatch(
       addProduct({ ...product, quantity, color, size })
     );
   };
+
   return (
     <Container>
       <Navbar />
@@ -162,8 +160,10 @@ const Product = () => {
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
-          <Desc>{product.desc}</Desc>
-          <Price>$ {product.price}</Price>
+          <Desc>
+            {product.desc}
+          </Desc>
+          <Price>$  {product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -175,7 +175,7 @@ const Product = () => {
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
-                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                  <FilterSizeOption size={s} key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>

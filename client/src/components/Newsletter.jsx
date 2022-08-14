@@ -1,6 +1,5 @@
 import { Send } from "@material-ui/icons";
 import styled from "styled-components";
-import { mobile } from "../responsive";
 
 const Container = styled.div`
   height: 60vh;
@@ -16,10 +15,9 @@ const Title = styled.h1`
 `;
 
 const Desc = styled.div`
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 300;
   margin-bottom: 20px;
-  ${mobile({ textAlign: "center" })}
 
 `;
 
@@ -30,7 +28,6 @@ const InputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   border: 1px solid lightgray;
-  ${mobile({ width: "80%" })}
 `;
 
 const Input = styled.input`
@@ -50,7 +47,7 @@ const Newsletter = () => {
   return (
     <Container>
       <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favorite products.</Desc>
+      <Desc>Get a HK$ 120 VOUCHER (plus the latest fashion news and product launches) just by subscribing to our newsletter.</Desc>
       <InputContainer>
         <Input placeholder="Your email" />
         <Button>

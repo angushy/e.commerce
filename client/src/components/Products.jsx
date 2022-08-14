@@ -1,35 +1,40 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Product from "./Product";
-import { axiosInstance } from "../requestMethods";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 const Container = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 `;
 
-const Products = ({ cat, filters, sort }) => {
+const Products = ({ category, filters, sort }) => {
+
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axiosInstance.get(
-          cat
-            ? `https://angeshop.herokuapp.com/api/products?category=${cat}`
-            : "https://angeshop.herokuapp.com/api/products"
-        );
+        const res = await axios.get(
+          category
+            ? `http://localhost:5000/api/products?category=${category}`
+            : "http://localhost:5000/api/products"
+
+        ); console.log(res)
         setProducts(res.data);
-      } catch (err) { }
+      } catch (err) {
+
+      }
     };
     getProducts();
-  }, [cat]);
+  }, [category]);
 
   useEffect(() => {
-    cat &&
+    category &&
       setFilteredProducts(
         products.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
@@ -37,7 +42,7 @@ const Products = ({ cat, filters, sort }) => {
           )
         )
       );
-  }, [products, cat, filters]);
+  }, [products, category, filters]);
 
   useEffect(() => {
     if (sort === "newest") {
@@ -55,9 +60,10 @@ const Products = ({ cat, filters, sort }) => {
     }
   }, [sort]);
 
+
   return (
     <Container>
-      {cat
+      {category
         ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
         : products
           .slice(0, 8)
@@ -65,5 +71,4 @@ const Products = ({ cat, filters, sort }) => {
     </Container>
   );
 };
-
 export default Products;

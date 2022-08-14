@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -20,7 +19,6 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
-  ${mobile({ width: "75%" })}
 `;
 
 const Title = styled.h1`
@@ -60,15 +58,14 @@ const Register = () => {
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
+          <Input placeholder="first name" />
           <Input placeholder="last name" />
           <Input placeholder="username" />
-          <Input placeholder="email" />
+          <Input placeholder="email address" />
           <Input placeholder="password" />
           <Input placeholder="confirm password" />
           <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
+            By creating your account or signing in, you agree to our Terms and Conditions &  <b>Privacy Policy.</b>
           </Agreement>
           <Button>CREATE</Button>
         </Form>

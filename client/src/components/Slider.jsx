@@ -1,8 +1,8 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { sliderItems } from "../data";
-import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -10,7 +10,6 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  ${mobile({ display: "none" })}
 `;
 
 const Arrow = styled.div`
@@ -37,6 +36,7 @@ const Wrapper = styled.div`
   display: flex;
   transition: all 1.5s ease;
   transform: translateX(${(props) => props.slideIndex * -100}vw);
+  
 `;
 
 const Slide = styled.div`
@@ -96,16 +96,19 @@ const Slider = () => {
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
         {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
-            </InfoContainer>
-          </Slide>
+          <Link to={`/products/${item.category}`} style={{ textDecoration: 'none', color: 'black' }}>
+            <Slide bg={item.bg} key={item.id}>
+              <ImgContainer>
+                <Image src={item.img} />
+              </ImgContainer>
+              <InfoContainer>
+                <Title>{item.title}</Title>
+                <Desc>{item.desc}</Desc>
+                <Button>SHOW NOW</Button>
+              </InfoContainer>
+            </Slide>
+          </Link>
+
         ))}
       </Wrapper>
       <Arrow direction="right" onClick={() => handleClick("right")}>
