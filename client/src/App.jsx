@@ -6,9 +6,9 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import {
   BrowserRouter as Router,
-  Routes,
+  Switch,
   Route,
-  Navigate,
+  Redirect,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -16,14 +16,24 @@ const App = () => {
   const isUser = useSelector((state) => state.user.currentUser);
   return (
     <Router>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/products/:category" element={<ProductList />} />
-        <Route path="/product/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={isUser ? <Navigate to="/" /> : <Login />} />
-        <Route path="/register" element={isUser ? <Navigate to="/" /> : <Register />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/products/:category">
+          <ProductList />
+        </Route>
+        <Route path="/product/:id">
+          <Product />
+        </Route>
+        <Route path="/cart">
+          <Cart />
+        </Route>
+        <Route path="/login">{isUser ? <Redirect to="/" /> : <Login />}</Route>
+        <Route path="/register">
+          {isUser ? <Redirect to="/" /> : <Register />}
+        </Route>
+      </Switch>
     </Router>
   );
 };
