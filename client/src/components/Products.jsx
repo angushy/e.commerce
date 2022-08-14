@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import Product from "./Product";
-import { publicRequest, axiosInstance } from "../requestMethods";
+import { axiosInstance } from "../requestMethods";
 
 const Container = styled.div`
   padding: 20px;
